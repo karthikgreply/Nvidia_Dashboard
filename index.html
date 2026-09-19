@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA Executive Analytics Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Placeholder Nvidia-like Logo -->
+                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="#76b900" stroke-width="8"/>
+                    <path d="M30 70 L70 30" stroke="#76b900" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+                <h2>NVIDIA Executive</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#overview">Overview & KPIs</a></li>
+                    <li><a href="#financials">Financial Position</a></li>
+                    <li><a href="#capacity">Capacity & Financing</a></li>
+                </ul>
+            </nav>
+            <div class="scenario-control">
+                <h3>Scenario Controller</h3>
+                <div class="toggle-container">
+                    <span class="label-left">Baseline</span>
+                    <label class="switch">
+                        <input type="checkbox" id="scenarioToggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="label-right">70% Growth (2027)</span>
+                </div>
+                <div class="scenario-badge"><span class="badge case-assumption">Case Assumption</span></div>
+            </div>
+            
+            <div class="recommendation-box">
+                <h3>Executive Recommendation</h3>
+                <p><strong>Action:</strong> Enter strategic supplier agreements now to secure TSMC CoWoS capacity for 2027.</p>
+                <p><strong>Financing:</strong> Leverage current high cash flow; issue $10B long-term debt to lock in rates and preserve liquidity buffers.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div>
+                    <h1>Capacity Finance & Analytics</h1>
+                    <p>Evaluating long-term shareholder value and supply constraints.</p>
+                </div>
+                <div class="data-legend">
+                    <span class="badge reported-actual">Reported Actual</span>
+                    <span class="badge company-outlook">Company Outlook</span>
+                    <span class="badge team-estimate">Team Estimate</span>
+                </div>
+            </header>
+
+            <section id="overview" class="kpi-grid">
+                <div class="kpi-card glass">
+                    <h3>2027 Revenue <span class="badge case-assumption">Assumption</span></h3>
+                    <div class="kpi-value" id="kpi-revenue">$150.0B</div>
+                    <div class="kpi-trend positive" id="kpi-revenue-trend">↑ 70.0% vs Baseline</div>
+                </div>
+                <div class="kpi-card glass">
+                    <h3>Operating Margin <span class="badge team-estimate">Estimate</span></h3>
+                    <div class="kpi-value" id="kpi-margin">58.5%</div>
+                    <div class="kpi-trend neutral" id="kpi-margin-trend">-0.5% vs Baseline</div>
+                </div>
+                <div class="kpi-card glass">
+                    <h3>Free Cash Flow (2027) <span class="badge team-estimate">Estimate</span></h3>
+                    <div class="kpi-value" id="kpi-fcf">$60.2B</div>
+                    <div class="kpi-trend positive" id="kpi-fcf-trend">↑ 45% vs Baseline</div>
+                </div>
+                <div class="kpi-card glass">
+                    <h3>Capacity Investment (CapEx) <span class="badge team-estimate">Estimate</span></h3>
+                    <div class="kpi-value" id="kpi-capex">$25.0B</div>
+                    <div class="kpi-trend negative" id="kpi-capex-trend">↑ 150% vs Baseline</div>
+                </div>
+                <div class="kpi-card glass highlight">
+                    <h3>Project NPV <span class="badge team-estimate">Estimate</span></h3>
+                    <div class="kpi-value" id="kpi-npv">$85.4B</div>
+                    <div class="kpi-subtext">IRR: <span id="kpi-irr">32%</span></div>
+                </div>
+            </section>
+
+            <section id="charts" class="chart-grid">
+                <div class="chart-card glass">
+                    <div class="chart-header">
+                        <h3>Revenue & Operating Margin Forecast</h3>
+                        <span class="badge team-estimate">Estimate</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueMarginChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card glass">
+                    <div class="chart-header">
+                        <h3>Cash Flow vs CapEx Needs</h3>
+                        <span class="badge team-estimate">Estimate</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cashFlowChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="details-grid">
+                <div class="detail-card glass">
+                    <h3>Liquidity & Debt Position</h3>
+                    <p class="meta">As of Q4 FY24 <span class="badge reported-actual">Actual</span></p>
+                    <ul class="stats-list">
+                        <li><span>Cash & Equivalents:</span> <strong>$25.9B</strong></li>
+                        <li><span>Total Debt:</span> <strong>$9.7B</strong></li>
+                        <li><span>Net Cash Position:</span> <strong>$16.2B</strong></li>
+                    </ul>
+                    <p class="trigger-warning"><strong>Decision Trigger:</strong> If required upfront capacity commitments exceed $15B in 2025, recommend issuing new debt to maintain >$20B cash buffer.</p>
+                </div>
+                
+                <div class="detail-card glass">
+                    <h3>Supplier Capacity Strategy</h3>
+                    <p class="meta">2025-2027 Horizon <span class="badge company-outlook">Outlook</span> + <span class="badge team-estimate">Estimate</span></p>
+                    <p>NVIDIA's fabless model requires aggressive forward commitments. To support 70% growth:</p>
+                    <ul class="stats-list">
+                        <li><span>Foundry (TSMC):</span> <strong>$12B Prepayments required</strong></li>
+                        <li><span>HBM Memory:</span> <strong>$8B Capacity reservation</strong></li>
+                        <li><span>Packaging (CoWoS):</span> <strong>$5B Co-investment</strong></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
