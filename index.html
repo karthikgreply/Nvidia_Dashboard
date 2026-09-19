@@ -71,7 +71,7 @@
 
             <section id="overview" class="kpi-grid">
                 <div class="kpi-card glass">
-                    <h3>2027 Revenue <span class="badge case-assumption">Assumption</span></h3>
+                    <h3>Revenue <span class="badge case-assumption" id="badge-revenue">Assumption</span></h3>
                     <div class="kpi-value" id="kpi-revenue">$150.0B</div>
                     <div class="kpi-trend positive" id="kpi-revenue-trend">↑ 70.0% vs Baseline</div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="kpi-trend neutral" id="kpi-margin-trend">-0.5% vs Baseline</div>
                 </div>
                 <div class="kpi-card glass">
-                    <h3>Free Cash Flow (2027) <span class="badge team-estimate">Estimate</span></h3>
+                    <h3>Free Cash Flow <span class="badge team-estimate">Estimate</span></h3>
                     <div class="kpi-value" id="kpi-fcf">$60.2B</div>
                     <div class="kpi-trend positive" id="kpi-fcf-trend">↑ 45% vs Baseline</div>
                 </div>
@@ -91,13 +91,13 @@
                     <div class="kpi-trend negative" id="kpi-capex-trend">↑ 150% vs Baseline</div>
                 </div>
                 <div class="kpi-card glass highlight">
-                    <h3>Project NPV <span class="badge team-estimate">Estimate</span></h3>
+                    <h3>Project NPV <span class="badge team-estimate" id="badge-npv">Estimate</span></h3>
                     <div class="kpi-value" id="kpi-npv">$85.4B</div>
                     <div class="kpi-subtext">IRR: <span id="kpi-irr">32%</span></div>
                 </div>
             </section>
 
-            <section id="charts" class="chart-grid">
+            <section id="financials" class="chart-grid">
                 <div class="chart-card glass">
                     <div class="chart-header">
                         <h3>Revenue & Operating Margin Forecast</h3>
@@ -119,7 +119,7 @@
                 </div>
             </section>
             
-            <section class="details-grid">
+            <section id="capacity" class="details-grid">
                 <div class="detail-card glass">
                     <h3>Liquidity & Debt Position</h3>
                     <p class="meta">As of Q4 FY24 <span class="badge reported-actual">Actual</span></p>
@@ -133,12 +133,12 @@
                 
                 <div class="detail-card glass">
                     <h3>Supplier Capacity Strategy</h3>
-                    <p class="meta">2025-2027 Horizon <span class="badge company-outlook">Outlook</span> + <span class="badge team-estimate">Estimate</span></p>
+                    <p class="meta">2025-2027 Horizon <span class="badge company-outlook">Outlook</span> <span class="badge-separator">+</span> <span class="badge team-estimate">Estimate</span></p>
                     <p>NVIDIA's fabless model requires aggressive forward commitments. To support 70% growth:</p>
                     <ul class="stats-list">
-                        <li><span>Foundry (TSMC):</span> <strong>$12B Prepayments required</strong></li>
-                        <li><span>HBM Memory:</span> <strong>$8B Capacity reservation</strong></li>
-                        <li><span>Packaging (CoWoS):</span> <strong>$5B Co-investment</strong></li>
+                        <li><span>Foundry (TSMC):</span> <strong id="kpi-foundry">$12.0B Prepayments required</strong></li>
+                        <li><span>HBM Memory:</span> <strong id="kpi-hbm">$8.0B Capacity reservation</strong></li>
+                        <li><span>Packaging (CoWoS):</span> <strong id="kpi-cowos">$5.0B Co-investment</strong></li>
                     </ul>
                 </div>
             </section>

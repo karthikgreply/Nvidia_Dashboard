@@ -1,26 +1,53 @@
 // Simulated Financial Data & Scenarios
 
-const nvdiaData = {
-    labels: ['FY23 Actual', 'FY24 Actual', 'FY25 Outlook', 'FY26 Est', 'FY27 Baseline'],
-    
-    // Baseline Scenario Data (in Billions)
-    baseline: {
-        revenue: [26.9, 60.9, 105.0, 120.0, 130.0],
-        operatingMargin: [15.6, 54.1, 57.0, 58.0, 59.0], // Percentages (FY23: 15.6%, FY24: 54.1%)
-        cashFlow: [3.8, 14.2, 48.0, 52.0, 55.0], // Free Cash Flow (FY24 was 14.2B)
-        capEx: [1.8, 2.3, 6.0, 8.0, 10.0] // Capacity Investments (FY24 was ~2.3B)
-    },
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSv8a_dcH7-7XUwLuHjVNnWPNEVtM9hWkVaPOVof4TevF0mpDG9Mw6CueCiQVc3rO4lzwWoE5YX_1nn/pub?gid=0&single=true&output=csv";
 
-    // 70% Revenue Growth Scenario for FY27
-    // Calculates a 70% increase on the FY27 Baseline, scaling other metrics
+let nvdiaData = {
+    labels: ['FY23 Actual', 'FY24 Actual', 'FY25 Outlook', 'FY26 Est', 'FY27 Baseline'],
+    baseline: {
+        revenue: [], operatingMargin: [], cashFlow: [], capEx: []
+    },
     growthScenario: {
         labels: ['FY23 Actual', 'FY24 Actual', 'FY25 Outlook', 'FY26 Est', 'FY27 70% Growth'],
-        revenue: [26.9, 60.9, 105.0, 145.0, 221.0], // FY27 is 130 * 1.7 = 221
-        operatingMargin: [15.6, 54.1, 57.0, 59.5, 58.5], // Slight margin compression due to capacity costs
-        cashFlow: [3.8, 14.2, 48.0, 58.0, 85.0], // Higher cash flow, but offset by capEx
-        capEx: [1.8, 2.3, 6.0, 18.0, 25.0] // Massive CapEx ramp up needed to support 221B revenue
+        revenue: [], operatingMargin: [], cashFlow: [], capEx: []
     }
 };
+
+async function fetchGoogleSheetData() {
+    try {
+        const response = await fetch(SHEET_URL);
+        const csvText = await response.text();
+        
+        const lines = csvText.trim().split(/\r?\n/);
+        
+        // Skip header row
+        for(let i = 1; i < lines.length; i++) {
+            const cols = lines[i].split(',');
+            if (cols.length < 7) continue; // safety check
+            
+            const metric = cols[0].replace(/['"]/g, '').trim().toLowerCase();
+            const scenario = cols[1].replace(/['"]/g, '').trim().toLowerCase();
+            
+            const values = [
+                parseFloat(cols[2].replace(/[^0-9.-]+/g,"")),
+                parseFloat(cols[3].replace(/[^0-9.-]+/g,"")),
+                parseFloat(cols[4].replace(/[^0-9.-]+/g,"")),
+                parseFloat(cols[5].replace(/[^0-9.-]+/g,"")),
+                parseFloat(cols[6].replace(/[^0-9.-]+/g,""))
+            ];
+            
+            let targetObj = scenario.includes('baseline') ? nvdiaData.baseline : nvdiaData.growthScenario;
+            
+            if (metric.includes('revenue')) targetObj.revenue = values;
+            else if (metric.includes('margin')) targetObj.operatingMargin = values;
+            else if (metric.includes('cash')) targetObj.cashFlow = values;
+            else if (metric.includes('capex')) targetObj.capEx = values;
+        }
+        console.log("Data successfully loaded from Google Sheets!");
+    } catch(err) {
+        console.error("Failed to fetch Google Sheet data. Make sure it's published to the web.", err);
+    }
+}
 
 // Calculates NPV for capacity investments in the 70% growth scenario
 function calculateNPV(discountRate = 0.1) {
